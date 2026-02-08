@@ -30,6 +30,8 @@ class GameScene extends Phaser.Scene {
     this.load.audio('music_level1', 'assets/audio/music_level1.mp3');
     this.load.audio('music_level2', 'assets/audio/music_level2.mp3');
     this.load.audio('music_level3', 'assets/audio/music_level3.mp3');
+    this.load.audio('heart_pop', 'assets/audio/heart_pop.mp3');
+    this.load.audio('obstacle_hit', 'assets/audio/obstacle_hit.mp3');
   }
 
   create() {
@@ -442,6 +444,11 @@ class GameScene extends Phaser.Scene {
     if (player.y > obstacle.y) return;
     if (this.isRecovering) return;
 
+    this.sound.play('obstacle_hit', {
+      volume: 0.5,
+      rate: Phaser.Math.FloatBetween(0.95, 1.05)
+    });
+
     this.isRecovering = true;
     this.obstaclesHit++;
     this.updateScoreUI();
@@ -475,6 +482,10 @@ class GameScene extends Phaser.Scene {
   }
 
   collectHeart(player, heart) {
+    this.sound.play('heart_pop', {
+      volume: 0.6
+    });
+
     if (this.currentLevel === 1) {
       this.heartsCollected += 2;
 
@@ -485,6 +496,7 @@ class GameScene extends Phaser.Scene {
       this.heartsCollected += 8;
 
     }
+
     this.updateScoreUI();
     heart.disableBody(true, true);
     this.confettiEmitter.setPosition(heart.x, heart.y);
@@ -514,6 +526,7 @@ class GameScene extends Phaser.Scene {
     this.add.rectangle(180, 320, 360, 640, 0xffffff, 0.95).setScrollFactor(0);
     this.add.text( 180, 260, 'No matter how fast life runs...\nI choose you ❤️', { fontSize: '18px', color: '#000', align: 'center' }).setOrigin(0.5).setScrollFactor(0);
     this.add.text( 180, 340, 'Will you be my Valentine?', { fontSize: '22px', color: '#e63946' } ).setOrigin(0.5).setScrollFactor(0);
+
     this.addYesButtonOnFinalScreen();
     this.addNobuttonOnFinalScreen();
   }
@@ -587,7 +600,25 @@ class GameScene extends Phaser.Scene {
       frequency: 120
     });
 
-    container.add([bg, couple, title, subText, hearts]);
+    const finalScore = this.add.text(
+      this.scale.width / 2,
+      this.scale.height / 2 + 200,
+      "❤️ Love: ∞  🌵 Problems: 0",
+      {
+        fontSize: "16px",
+        color: "#e63946",
+        fontStyle: "bold",
+        align: "center",
+        stroke: "#ffffff",
+        strokeThickness: 5,
+        padding: {
+          x: 20,
+          y: 10
+        }
+      }
+    ).setOrigin(0.5);
+
+    container.add([bg, couple, title, subText, finalScore, hearts]);
     this.children.bringToTop(container);
   }
   
