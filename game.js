@@ -56,9 +56,9 @@ class GameScene extends Phaser.Scene {
     const bg = this.add.rectangle( this.scale.width/2, this.scale.height/2, this.scale.width, this.scale.height, 0xffe3ec );
     const couple = this.add.image( this.scale.width/2, 240, 'intro_couple');
     couple.setScale(0.8);
-  
-    const title = this.add.text( this.scale.width/2, 60, "A little journey for you ❤️", { fontSize: "24px", color: "#e63946", fontStyle: "bold", align: "center", wordWrap: { width: this.scale.width - 40 } } ).setOrigin(0.5);
-  
+
+    const title = this.add.text( this.scale.width/2, 60, "Hi Babesie ❤️", { fontSize: "24px", color: "#e63946", fontStyle: "bold", align: "center", wordWrap: { width: this.scale.width - 40 } } ).setOrigin(0.5);
+
     const message = this.add.text(
       this.scale.width/2,
       420,
@@ -76,7 +76,7 @@ class GameScene extends Phaser.Scene {
         color: "#333"
       }
     ).setOrigin(0.5);
-  
+
     const startBtn = this.add.text( this.scale.width/2, 540, "Tap to Begin ❤️", { fontSize: "20px",color: "#ffffff", backgroundColor: "#ff6b81",padding: { x: 20, y: 10 }}).setOrigin(0.5).setInteractive({ useHandCursor: true });
     this.tweens.add({ targets: startBtn, scale: 1.05, duration: 800, yoyo: true, repeat: -1, ease: "Sine.easeInOut" });
 
